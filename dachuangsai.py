@@ -7,7 +7,7 @@ url = "https://restapi.amap.com/v3/weather/weatherInfo?"
 city = "370211"
 extensions = "all"
 output = "json"
-key = "e4446083c70b225d4a78fc245649e583"
+key = "     "
 
 params = {
     "city": city,
@@ -121,9 +121,9 @@ print("停止原因:", finish_reason)
 
 import SparkApi
 #以下密钥信息从控制台获取
-appid = "214c1dad"     #填写控制台中获取的 APPID 信息
-api_secret = "NTE2ZDc5ZWUxMDA3ZmYxNDIxNDA2MGFi"   #填写控制台中获取的 APISecret 信息
-api_key ="c2d5988bb69048db0b287c4f3600be2c"    #填写控制台中获取的 APIKey 信息
+appid = "    "     #填写控制台中获取的 APPID 信息
+api_secret = "    "   #填写控制台中获取的 APISecret 信息
+api_key ="   "    #填写控制台中获取的 APIKey 信息
 
 #用于配置大模型版本，默认“general/generalv2”
 #domain = "general"   # v1.5版本
