@@ -4,17 +4,18 @@
 int main(){
     FILE *fp;
     char str[100];
-    if((fp=fopen("file.txt","w"))==NULL){
+    if((fp=fopen("file.txt","r"))==NULL){
         printf("error\n");
         exit(1);
     }
-    while (gets(str)!=NULL)
+    while (fgets(str,81,fp)!=NULL)
     {
-        fputs(str,fp);
-        fputc('\n',fp);
+        printf("%s",str);
     }
     fclose(fp);
+    system("pause");
     
+
     return 0;
     
 
