@@ -1,22 +1,31 @@
 #include<stdlib.h>
 #include<stdio.h>
 
+typedef struct student
+{
+    int id;
+    char name[20];
+    int s;
+}STU;
+
+STU stu[3];
+
 int main(){
     FILE *fp;
-    char str[100];
-    if((fp=fopen("file.txt","r"))==NULL){
-        printf("error\n");
+    int i;
+    if((fp=fopen("student.dat","wb"))==NULL){
+        printf("error");
         exit(1);
     }
-    while (fgets(str,81,fp)!=NULL)
+    for (int i = 0; i < 3; i++)
     {
-        printf("%s",str);
+        scanf("%d%s%d",&stu[i].id,stu[i].name,&stu[i].s);
     }
+    fwrite(stu,sizeof(STU),3,fp);
     fclose(fp);
     system("pause");
-    
-
     return 0;
+    
     
 
     
