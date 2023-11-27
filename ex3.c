@@ -23,7 +23,7 @@ int sortArrMin(float *arr) {
                 min = j;
             }
         }
-        
+
         float temp = arr[i];
         arr[i] = arr[min];
         arr[min] = temp;
@@ -40,7 +40,7 @@ int sortArrMax(float *arr) {
                 max = j;
             }
         }
-        
+
         float temp = arr[i];
         arr[i] = arr[max];
         arr[max] = temp;
@@ -64,7 +64,7 @@ void bubble_sort(int arr[], int len) {
 void add(){
     if(number<100){
         printf("请输入学生姓名：\n");
-        scanf("%s",students[number].name);
+        gets(students[number].name);
         printf("请输入学生学号：\n");
         scanf("%d",&students[number].id);
         printf("请输入学生班级：\n");
@@ -78,8 +78,8 @@ void add(){
     }else{
         printf("已到达人数上限");
     }
-   
-        
+
+
 }
 
 //打印全部学生
@@ -101,7 +101,7 @@ void display(){
         }
         printf("--------------------------------------------------\n");
     }
-    
+
 }
 void findByid(int id){
     if (number==0)
@@ -117,17 +117,17 @@ void findByid(int id){
                 printf("学号：%d\n", students[i].id);
                 printf("班级：%d\n", students[i].class_num);
                 printf("课程成绩：%.2f %.2f %.2f\n",
-                    students[i].score[0], students[i].score[1], students[i].score[2]); 
+                    students[i].score[0], students[i].score[1], students[i].score[2]);
             }else{
-            
+
              printf("没有找到此学生\n");
             }
-             
+
         }
-        
+
 
     }
-    
+
 }
 
 void findByname(char *name){
@@ -145,26 +145,26 @@ void findByname(char *name){
                 printf("学号：%d\n", students[i].id);
                 printf("班级：%d\n", students[i].class_num);
                 printf("课程成绩：%.2f %.2f %.2f\n",
-                    students[i].score[0], students[i].score[1], students[i].score[2]); 
+                    students[i].score[0], students[i].score[1], students[i].score[2]);
                 found=1;
-                
-                
+
+
             }
-            
+
         }
         if (found==0)
         {
             printf("没有找到此学生\n");
         }
-        
+
     }
-    
+
 }
 
 void findLsscore(int class_num){
     if (number==0)
     {
-       printf("目前还没有任何学生"); 
+       printf("目前还没有任何学生");
     }else{
         float *score =(float *)malloc(sizeof(float)*number);
         for (int i = 0; i < number; i++)
@@ -180,14 +180,14 @@ void findLsscore(int class_num){
         free(score);
 
     }
-    
+
 
 }
 
 void findHIscore(int class_num){
     if (number==0)
     {
-       printf("目前还没有任何学生"); 
+       printf("目前还没有任何学生");
     }else{
         float *score =(float *)malloc(sizeof(float)*number);
         for (int i = 0; i < number; i++)
@@ -203,14 +203,14 @@ void findHIscore(int class_num){
         free(score);
 
     }
-    
+
 
 }
 
 void findByAve(int n){
     if (number==0)
     {
-       printf("目前还没有任何学生");  
+       printf("目前还没有任何学生");
     }else{
         float *Avescore =(float *)malloc(sizeof(float)*number);
         for (int i = 0; i < number; i++)
@@ -224,7 +224,7 @@ void findByAve(int n){
             printf("姓名：%s\n", students[max].name);
             printf("学号：%d\n", students[max].id);
             printf("班级：%d\n", students[max].class_num);
-                       
+
         }
         if (n=2)//1是找最高，2是找最低
         {
@@ -233,12 +233,12 @@ void findByAve(int n){
             printf("姓名：%s\n", students[max].name);
             printf("学号：%d\n", students[max].id);
             printf("班级：%d\n", students[max].class_num);
-                       
+
         }
         free(Avescore);
 
     }
-    
+
 }
 
 void delByid(int id){
@@ -250,7 +250,7 @@ void delByid(int id){
 
     int found = 0;
     int index = 0;
-    
+
     for (int i = 0; i < number; i++) {
         if (students[i].id == id) {
             printf("找到以下学生信息，是否确认删除？\n");
@@ -283,9 +283,9 @@ void delByid(int id){
     } else {
         printf("学生信息未被删除。\n");
     }
-}    
+}
 
-    
+
 void delByName(char *name){
     int found=0;
     int index=0;
@@ -297,7 +297,7 @@ void delByName(char *name){
         {
             if (strcmp(name,students[i].name)==0)
             {
-                
+
                 printf("找到以下学生信息，是否确认删除？\n");
                 printf("%-10s %-10s %-10s %-10s %-10s %-10s\n", "姓名", "学号", "班级", "课程1", "课程2", "课程3");
                 printf("%-10s %-10d %-10d %-10.2f %-10.2f %-10.2f\n", students[i].name, students[i].id,
@@ -305,9 +305,9 @@ void delByName(char *name){
                 found = 1;
                 index = i;
                 break;
-                
+
             }
-        }   
+        }
     }
     if (!found) {
         printf("未找到姓名为%s的学生。\n", name);
@@ -328,7 +328,7 @@ void delByName(char *name){
         printf("学生信息删除成功！\n");
     } else {
         printf("学生信息未被删除。\n");
-    }    
+    }
 
 }
 
@@ -350,7 +350,7 @@ void insert() {
         } else {
             number++;
             printf("请输入学生姓名：\n");
-            scanf("%s", students[number - 1].name);
+            gets( students[number - 1].name);
             students[number - 1].id = newid;
             printf("请输入学生班级：\n");
             scanf("%d", &students[number - 1].class_num);
@@ -383,10 +383,10 @@ void allAve(){
             printf("%-10s %-10d %-10d %-10.2f\n",students[i].name,students[i].id,students[i].class_num,ave[i]/3.0);
         }
         free(ave);
-    
+
     }
-    
-        
+
+
 }
 
 void allsum() {
@@ -421,12 +421,12 @@ void aveByclass_num(int class_num) {
         }
         if (!found) {
             printf("未找到班级为%d的学生。\n", class_num);
-            
+
         }
- 
+
     }
-    
-    
+
+
 }
 
 void displayBySumscore() {
@@ -447,7 +447,7 @@ void displayBySumscore() {
         //假定一个索引数列和总分数序列，在对分数数列排序的时候同时对索引数列进行排序
         for (int i = 0; i < number; i++)
         {
-          
+
             for (int j = 0; j < number-1-i; j++ )
             {
                 if (sum[j]>sum[j+1])
@@ -459,10 +459,10 @@ void displayBySumscore() {
                     sumIdx[j]=sumIdx[j+1];
                     sumIdx[j+1]=temp;
                 }
-                
-                
+
+
             }
-              
+
         }
 
         printf("按总分排序的学生信息为\n");
@@ -472,7 +472,7 @@ void displayBySumscore() {
         }
         free(sum);
         free(sumIdx);
-    }    
+    }
 }
 
 int main() {
@@ -483,6 +483,19 @@ int main() {
 
     printf("欢迎使用学生信息管理系统\n");
     while (1) {
+
+
+        int choice2;
+        int id;
+        int class_num;
+        int class_num3;
+        int choice3;
+        int id2=0;
+        int choice4;
+        int class_num2;
+        int class_num9;
+
+
         printf("请选择操作：\n");
         printf("1.添加学生信息\n");
         printf("2.显示学生信息\n");
@@ -494,6 +507,7 @@ int main() {
         printf("0.退出\n");
         int choice;
         scanf("%d", &choice);
+        getchar();
         switch (choice) {
             case 1:
                 add();
@@ -509,34 +523,41 @@ int main() {
                 printf("4.查询某门课的最低成绩的学生\n");
                 printf("5.查询某门课的平均成绩最高或最低的学生\n");
                 int choice2;
+                int id;
+                int class_num;
+                int class_num3;
                 scanf("%d", &choice2);
+                getchar();
+                char name[20];
+                char name2[20];
+
                 switch (choice2) {
                     case 1:
-                        char name[20];
+
                         printf("请输入学生姓名：\n");
-                        scanf("%s", name);
+                        gets(name);
                         findByname(name);
                         break;
                     case 2:
-                        int id;
+
                         printf("请输入学生学号：\n");
                         scanf("%d", &id);
                         findByid(id);
                         break;
                     case 3:
-                        int class_num;
+
                         printf("请输入课程序号：\n");
                         scanf("%d",&class_num);
                         findHIscore(class_num);
                         break;
                     case 4:
-                        int class_num2;
+
                         printf("请输入课程序号：\n");
-                        scanf("%d", &class_num2);
-                        findLsscore(class_num2);
+                        scanf("%d", &class_num9);
+                        findLsscore(class_num9);
                         break;
                     case 5:
-                        int class_num3;
+
                         printf("查询最高的学生或最低的学生：\n");
                         printf("1.查询最高的学生\n");
                         printf("2.查询最低的学生\n");
@@ -549,35 +570,37 @@ int main() {
                 }
                 break;
             case 4:
+
                 insert();
                 break;
             case 5:
                 printf("请选择删除的方式\n");
                 printf("1.按姓名删除\n");
                 printf("2.按学号删除\n");
-                int choice3;
+
                 scanf("%d", &choice3);
+                getchar();
                 switch (choice3) {
                     case 1:
-                        char name2[20];
+
                         printf("请输入学生姓名：\n");
-                        scanf("%s", name2);
+                        gets(name2);
                         delByName(name2);
                         break;
                     case 2:
-                        int id2=0;
+
                         printf("请输入学生学号：\n");
                         scanf("%d", &id2);
                         delByid(id2);
                         break;
-                    }          
+                    }
                 break;
             case 6:
                 printf("请选择计算的方式\n");
                 printf("1.计算平均成绩\n");
                 printf("2.计算总分\n");
                 printf("3.班级最高分\n");
-                int choice4;
+
                 scanf("%d", &choice4);
                 switch (choice4) {
                     case 1:
@@ -587,7 +610,7 @@ int main() {
                         allsum();
                         break;
                     case 3:
-                        int class_num2;
+
                         printf("请输入班级：\n");
                         scanf("%d", &class_num2);
                         aveByclass_num(class_num2);
