@@ -57,7 +57,9 @@
         "map": "cpp",
         "vector": "cpp",
         "xtree": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "E:/FirstCproject/Firstlearn/FSD/FSD",
+    "cmake.configureOnOpen": false
 
 
 }
