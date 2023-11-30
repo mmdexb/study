@@ -24,13 +24,29 @@ void updateNumber(){
     {
         printf("打开文件失败！");
     }
-    //打开文件后检测是否为空文件
+    //计算条数
     fseek(fp,0,SEEK_END);
     number = ftell(fp)/sizeof(people);
     fclose(fp);
 }
 
+void updateId(){
+    fp=fopen("people.dat","rb");
+    people *tempid=(people*)malloc(sizeof(people)*number);   
+    fread(tempid,sizeof(people),number,fp);
+    int i=0;
+    for ( i = 0; i < number; i++)
+    {
+        tempid[i].id=i+1;
+    }
+    fclose(fp);
+    fp=fopen("people.dat","wb");
+    fwrite(tempid,sizeof(people),number,fp);
+    free(tempid);
+    fclose(fp);
+    
 
+}
 
 
 //新增联系人
@@ -48,7 +64,7 @@ void add (){
     getchar();
     gets(newadd.qq);
     printf("请输入单位或班级: ");
-    scanf("%s", newadd.poi);
+    gets(newadd.poi);
     getchar();
     newadd.id=number;
     printf("你添加的是：\n");
@@ -66,7 +82,7 @@ void add (){
     fwrite(&newadd,sizeof(people),1,fp);
     fclose(fp);
     printf("添加成功！\n");
-    
+    updateId();
 
 
 }
@@ -84,7 +100,7 @@ void display(){
         }
 
         printf("\n===== 联系人列表 =====\n");
-        printf("%-5s% -15s% -5s% -20s% -20s% -20s\n", "序号", "姓名", "性别", "手机号码", "QQ号", "单位或班级");
+        printf("%-5s%-15s%-5s%-20s%-20s%-20s\n", "序号", "\t姓名", "\t性别", "\t手机号码", "\tQQ号", "\t单位或班级");
         while (fread(&newdisplay,sizeof(people),1,fp)==1)
         {
             printf("%-5d %-15s %-5c %-20s %-20s %-20s\n",newdisplay.id,newdisplay.name,newdisplay.gender,newdisplay.phone,newdisplay.qq,newdisplay.poi);
@@ -118,7 +134,7 @@ void findbyName(char *name){
             if (strcmp(byname.name,name)==0)
             {
                 printf("找到名为%s的联系人\n",byname.name);
-                printf("%-5d%-15s%-5c%-15s%-15s%-20s\n",byname.id,byname.name,byname.gender,byname.phone,byname.qq,byname.poi);
+                printf("%-5s%-20s%-5s%-15s%-15s%-20s\n",byname.id,byname.name,byname.gender,byname.phone,byname.qq,byname.poi);
                 found=0;
 
             }
@@ -174,7 +190,7 @@ void findbyPhone(char *phone){
 void oddbyName(){
     people* arr=(people*)malloc(number*sizeof(people));
     fp=fopen("people.dat","rb");
-    if (fp=NULL)
+    if (fp==NULL)
     {
         printf("文件打开失败\n");
     }
@@ -218,12 +234,13 @@ void oddbyName(){
 
         fp=fopen("people_odd.dat","wb");
         fwrite(arr,sizeof(people),number,fp);
-
+        
+        printf("\n===== 按名字排序 =====\n");
+        printf("%-5s%-15s%-5s%-20s%-20s%-20s\n", "序号", "\t姓名", "\t性别", "\t手机号码", "\tQQ号", "\t单位或班级");
         for (i = 0; i < number; i++)
         {
-        printf("\n===== 按名字排序 =====\n");
-        printf("%-5s%-15s%-5s%-15s%-15s%-20s\n", "序号", "姓名", "性别", "手机号码", "QQ号", "单位或班级");
-        printf("%-5d%-15s%-5c%-15s%-15s%-20s\n",arr[i].id,arr[i].name,arr[i].gender,arr[i].phone,arr[i].qq,arr[i].poi);           
+
+        printf("%-5d %-15s %-5c %-20s %-20s %-20s\n",arr[i].id,arr[i].name,arr[i].gender,arr[i].phone,arr[i].qq,arr[i].poi);           
         }
 
         fclose(fp);
@@ -257,10 +274,8 @@ void delbyName(char *delname){
         {
             if (strcmp(delarr[i].name,delname)==0)
             {
-                printf("找到名为%s的联系人，将删除\n",delarr[i].name);
+                printf("找到名为%s的联系人,将删除\n",delarr[i].name);
                 printf("%-5d%-15s%-5c%-15s%-15s%-20s\n",delarr[i].id,delarr[i].name,delarr[i].gender,delarr[i].phone,delarr[i].qq,delarr[i].poi);
-                printf("确定删除？(y/n)");
-
                 found=1;
                 index=i;
                 
@@ -295,6 +310,7 @@ void delbyName(char *delname){
     fwrite(delarr,sizeof(people),number,fp);
     fclose(fp);
     free(delarr);
+    updateId();
 
 }
 
@@ -338,13 +354,11 @@ int main(){
                     case 1:
                         printf("请输入要查找的姓名：");
                         gets(findname);
-                        getchar();
                         findbyName(findname);
                         break;
                     case 2:
                         printf("请输入要查找的电话号码：");
                         gets(findphone);
-                        getchar();
                         findbyPhone(findphone);
                         break;
                     default:
@@ -353,8 +367,7 @@ int main(){
                 }
                 
                 break;
-            case 4:
-                
+            case 4:                
                 printf("请输入要删除的联系人姓名: \n");
                 getchar();
                 gets(delname);
