@@ -134,7 +134,7 @@ void findbyName(char *name){
             if (strcmp(byname.name,name)==0)
             {
                 printf("找到名为%s的联系人\n",byname.name);
-                printf("%-5s%-20s%-5s%-15s%-15s%-20s\n",byname.id,byname.name,byname.gender,byname.phone,byname.qq,byname.poi);
+                printf("%-5d%-15s%-5c%-15s%-15s%-20s\n",byname.id,byname.name,byname.gender,byname.phone,byname.qq,byname.poi);
                 found=0;
 
             }
@@ -349,14 +349,16 @@ int main(){
                 printf("1.按姓名查找\n");
                 printf("2.按电话号码查找\n");
                 scanf("%d",&choice2);
-                getchar();
+                
                 switch(choice2){
                     case 1:
+                        getchar();
                         printf("请输入要查找的姓名：");
                         gets(findname);
                         findbyName(findname);
                         break;
                     case 2:
+                        getchar();
                         printf("请输入要查找的电话号码：");
                         gets(findphone);
                         findbyPhone(findphone);
