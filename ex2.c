@@ -3,7 +3,7 @@
 #include <time.h>
 
 int randInt() {
-    
+
     return (rand() % 100) + 1;
 }
 
@@ -32,16 +32,18 @@ double Time(time_t start) {
 }
 
 void check(int result_user, int result) {
+
+
     if (result_user == result) {
         printf("very good\n");
     } else {
-        printf("wrong! 再试一次");
+        printf("wrong! 再试一次\n");
         scanf("%d", &result_user);
         if (result_user == result) {
             printf("very good\n");
         } else {
             printf("wrong! 答案是：");
-            printf("%d", result);
+            printf("%d\n", result);
         }
     }
 }
@@ -51,7 +53,7 @@ int main() {
     printf("****************************************\n");
     printf("*Created by 陈薏帆 网安233 202301050854*\n");
     printf("****************************************\n");
-    
+
 
     int col;
     double right = 0;
@@ -69,16 +71,18 @@ int main() {
 
         switch (col) {
             case 1:
+                right=0;
+                right_rate=0.0;
                 for (int i = 0; i < count; i++) {
                     temp1 = randInt();
                     temp2 = randInt();
                     result = add(temp1, temp2);
-                    printf("请在100s内计算 %d + %d =\n", temp1, temp2);
+                    printf("请在30s内计算 %d + %d =\n", temp1, temp2);
                     time_t start = time(NULL);
                     double elapsed;
                     scanf("%d", &result_user);
                     elapsed = Time(start);
-                    if (elapsed > 100.0) {
+                    if (elapsed >30.0) {
                         printf("超时，此题判错\n");
                     } else {
                         check(result_user, result);
@@ -90,17 +94,19 @@ int main() {
                 break;
 
             case 2:
+                right=0;
+                right_rate=0.0;
                 for (int i = 0; i < count; i++) {
                     srand((unsigned int)time(NULL));
                     temp1 = randInt();
                     temp2 = randInt();
                     result = sub(temp1, temp2);
-                    printf("请在100s内计算 %d - %d =\n", temp1, temp2);
+                    printf("请在30s内计算 %d - %d =\n", temp1, temp2);
                     time_t start = time(NULL);
                     double elapsed;
                     scanf("%d", &result_user);
                     elapsed = Time(start);
-                    if (elapsed > 100.0) {
+                    if (elapsed > 30.0) {
                         printf("超时，此题判错\n");
                     } else {
                         check(result_user, result);
@@ -112,16 +118,18 @@ int main() {
                 break;
 
             case 3:
+                right=0;
+                right_rate=0.0;
                 for (int i = 0; i < count; i++) {
                     temp1 = randInt();
                     temp2 = randInt();
                     result = mul(temp1, temp2);
-                    printf("请在100s内计算 %d * %d =\n", temp1, temp2);
+                    printf("请在30s内计算 %d * %d =\n", temp1, temp2);
                     time_t start = time(NULL);
                     double elapsed;
                     scanf("%d", &result_user);
                     elapsed = Time(start);
-                    if (elapsed > 100.0) {
+                    if (elapsed > 30.0) {
                         printf("超时，此题判错\n");
                     } else {
                         check(result_user, result);
@@ -133,6 +141,8 @@ int main() {
                 break;
 
             case 4:
+                right=0;
+                right_rate=0.0;
                 for (int i = 0; i < count; i++) {
                     temp1 = randInt();
                     temp2 = randInt();
@@ -140,12 +150,12 @@ int main() {
                         temp2 = randInt();
                     }
                     result = divd(temp1, temp2);
-                    printf("请在100s内计算 仅回答整数部分 %d / %d =\n", temp1, temp2);
+                    printf("请在30s内计算 仅回答整数部分 %d / %d =\n", temp1, temp2);
                     time_t start = time(NULL);
                     double elapsed;
                     scanf("%d", &result_user);
                     elapsed = Time(start);
-                    if (elapsed > 100.0) {
+                    if (elapsed > 30.0) {
                         printf("超时，此题判错\n");
                     } else {
                         check(result_user, result);
@@ -157,6 +167,8 @@ int main() {
                 break;
 
             case 5:
+                right=0;
+                right_rate=0.0;
                 for (int i = 0; i < count; i++) {
                     temp1 = randInt();
                     temp2 = randInt();
@@ -164,29 +176,29 @@ int main() {
                     switch (operation) {
                         case 1:
                             result = add(temp1, temp2);
-                            printf("请在100s内计算 %d + %d =\n", temp1, temp2);
+                            printf("请在30s内计算 %d + %d =\n", temp1, temp2);
                             break;
                         case 2:
                             result = sub(temp1, temp2);
-                            printf("请在100s内计算 %d - %d =\n", temp1, temp2);
+                            printf("请在30s内计算 %d - %d =\n", temp1, temp2);
                             break;
                         case 3:
                             result = mul(temp1, temp2);
-                            printf("请在100s内计算 %d * %d =\n", temp1, temp2);
+                            printf("请在30s内计算 %d * %d =\n", temp1, temp2);
                             break;
                         case 4:
                             while (temp2 == 0) {
                                 temp2 = randInt();
                             }
                             result = divd(temp1, temp2);
-                            printf("请在100s内计算 仅回答整数部分 %d / %d =\n", temp1, temp2);
+                            printf("请在30s内计算 仅回答整数部分 %d / %d =\n", temp1, temp2);
                             break;
                     }
                     time_t start = time(NULL);
                     double elapsed;
                     scanf("%d", &result_user);
                     elapsed = Time(start);
-                    if (elapsed > 100.0) {
+                    if (elapsed > 30.0) {
                         printf("超时，此题判错\n");
                     } else {
                         check(result_user, result);
