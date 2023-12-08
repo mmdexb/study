@@ -359,7 +359,7 @@ void insert() {
                 scanf("%f", &students[number - 1].score[i]);
             }
 
-            printf("插入成功！\n");
+            printf("插入成功\n");
             printf("您插入的学生信息为\n");
             printf("%-10s %-10s %-10s %-10s %-10s %-10s\n", "姓名", "学号", "班级", "课程1", "课程2", "课程3");
             printf("%-10s %-10d %-10d %-10.2f %-10.2f %-10.2f\n", students[number - 1].name, students[number - 1].id,
