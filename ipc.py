@@ -25,7 +25,7 @@ def update_dns_record(api_token, zone_id, record_id, new_ip):
     url = f"https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records/{record_id}"
     headers = {
         "Content-Type": "application/json",
-        "X-Auth-Email": "1367072295@qq.com",  # 请在此处填入你的Cloudflare邮箱
+        "X-Auth-Email": "  ",  # 请在此处填入你的Cloudflare邮箱
         "Authorization": f"Bearer {api_token}",
     }
     data = {
@@ -49,9 +49,9 @@ def update_dns_record(api_token, zone_id, record_id, new_ip):
 
 if __name__ == "__main__":
     # 请替换为你的Cloudflare API信息
-    api_token = "KJV2m6IrDnPLow3QjNXd_qzmQCnakUD0umL8uExD"
-    zone_id = "52313f05013baafb68caca26431039f8"
-    record_id = "9b76dfc52bfb7c348120367acf9a321a"  # 可以通过调用Cloudflare API获取
+    api_token = "  "
+    zone_id = "  "
+    record_id = "  "  # 可以通过调用Cloudflare API获取
 
     # 获取内网IP地址
     wlan_ip = get_wlan_ip()
@@ -63,3 +63,6 @@ if __name__ == "__main__":
         update_dns_record(api_token, zone_id, record_id, wlan_ip)
     else:
         print("无法获取无线局域网适配器 WLAN 的IPv4地址")
+
+
+    
