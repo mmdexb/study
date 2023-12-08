@@ -12,26 +12,40 @@ struct student
 };
 
 struct student students[100];
-extern int number=0;
+int number=0;
 
 int sortArrMin(float *arr) {
-    int minIndex = 0;
-    for (int i = 1; i < number; i++) {
-        if (arr[i] < arr[minIndex]) {
-            minIndex = i;
+    int min = 0;
+    for (int i = 0; i < number; i++) {
+        min = i;
+        for(int j = i + 1; j < number; j++) {
+            if (arr[j] < arr[min]) {
+                min = j;
+            }
         }
+
+        float temp = arr[i];
+        arr[i] = arr[min];
+        arr[min] = temp;
     }
-    return minIndex;
+    return min;
 }
 
 int sortArrMax(float *arr) {
-    int maxIndex = 0;
-    for (int i = 1; i < number; i++) {
-        if (arr[i] > arr[maxIndex]) {
-            maxIndex = i;
+    int max = 0;
+    for (int i = 0; i < number; i++) {
+        max = i;
+        for(int j = i + 1; j < number; j++) {
+            if (arr[j] > arr[max]) {
+                max = j;
+            }
         }
+
+        float temp = arr[i];
+        arr[i] = arr[max];
+        arr[max] = temp;
     }
-    return maxIndex;
+    return max;
 }
 
 
@@ -90,7 +104,6 @@ void display(){
 
 }
 void findByid(int id){
-    int found=0;
     if (number==0)
     {
         printf("目前还没有任何学生");
@@ -105,16 +118,12 @@ void findByid(int id){
                 printf("班级：%d\n", students[i].class_num);
                 printf("课程成绩：%.2f %.2f %.2f\n",
                     students[i].score[0], students[i].score[1], students[i].score[2]);
+            }else{
 
-                found=1;
+             printf("没有找到此学生\n");
             }
 
         }
-        if (found==0)
-        {
-            printf("未找到学号为%d的学生",id);
-        }
-        
 
 
     }
@@ -160,7 +169,7 @@ void findLsscore(int class_num){
         float *score =(float *)malloc(sizeof(float)*number);
         for (int i = 0; i < number; i++)
         {
-            score[i]=students[i].score[class_num-1];
+            score[i]=students[i].score[class_num];
         }
         int min=sortArrMin(score);
 
@@ -183,7 +192,7 @@ void findHIscore(int class_num){
         float *score =(float *)malloc(sizeof(float)*number);
         for (int i = 0; i < number; i++)
         {
-            score[i]=students[i].score[class_num-1];
+            score[i]=students[i].score[class_num];
         }
         int min=sortArrMax(score);
 
@@ -398,40 +407,27 @@ void allsum() {
 
 
 void aveByclass_num(int class_num) {
-    int found = 0;
-    int count = 0;
-    float totalScores[3] = {0}; // 初始化每门课程的总分为0
-
-    if (number == 0) {
+    int found=0;
+    if (number==0)
+    {
         printf("暂无学生信息。\n");
-    } else {
-        // 遍历学生数组，找到班级为class_num的学生
-        for (int i = 0; i < number; i++) {
-            if (students[i].class_num == class_num) {
-                // 累加每门课程的成绩
-                for (int j = 0; j < 3; j++) {
-                    totalScores[j] += students[i].score[j];
-                }
-                count++;
-                found = 1;
+    }else{
+        for (int i = 0; i < number; i++)
+        {
+            if (students[i].class_num==class_num)
+            {
+                printf("%-10s %-10d %-10d %-10.2f\n",students[i].name,students[i].id,students[i].class_num,students[i].score[0]+students[i].score[1]+students[i].score[2]/3.0);
             }
         }
-
-        if (found) {
-            printf("班级%d的平均成绩为：\n", class_num);
-            printf("%-15s%-15s%-15s\n", "科目","平均分");
-
-            for (int j = 0; j < 3; j++) {
-                float average = totalScores[j] / count;
-                printf("%-15d%-15.2f\n", j + 1, average);
-            }
-        } else {
+        if (!found) {
             printf("未找到班级为%d的学生。\n", class_num);
+
         }
+
     }
+
+
 }
-
-
 
 void displayBySumscore() {
     if (number == 0) {
@@ -603,7 +599,7 @@ int main() {
                 printf("请选择计算的方式\n");
                 printf("1.计算平均成绩\n");
                 printf("2.计算总分\n");
-                printf("3.按班级查询每门科目的平均分\n");
+                printf("3.班级最高分\n");
 
                 scanf("%d", &choice4);
                 switch (choice4) {
