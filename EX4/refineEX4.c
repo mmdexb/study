@@ -98,14 +98,21 @@ int newID(){
     }else{
 
         int id=0;
+        int max=-1215;
         people *temp=head;
-        while (temp->next!=NULL)
+        while (temp!=NULL)
         {
-            temp=temp->next;   
+            id=temp->id; 
+            temp=temp->next;  
+            if (id>max)
+            {
+                max=id;
+            }
+            
         }
-        id=temp->id;
+        
         FreeList(head);
-        return id+1;
+        return max+1;
 
     }
 
