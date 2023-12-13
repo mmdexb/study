@@ -16,99 +16,84 @@ struct people
 
 };
 typedef struct people people;
-people *head=NULL;
-
 int number;
 FILE *fp;
 
+void FreeList(people *head) {
+    people *cur = head;
+    while (cur != NULL) {
+        people *next = cur->next;
+        free(cur);
+        cur = next;
+    }
+}
+
 void createFile() {
     FILE *file = fopen("peo.dat", "r");
-
     if (file == NULL) {
-        
         file = fopen("peo.dat", "w");
-
         if (file != NULL) {
             printf("success\n");
-            fclose(file);
         } else {
-            printf("failed\n");
+            printf("Failed\n");
         }
-    } else {
-        fclose(file); 
+    }
+    if (file != NULL) {
+        fclose(file);
     }
 }
 
-void FreeList() {
-    
-    if (head==NULL)
-    {
-        return;
-    }
-    people *p=head->next;
-    while (p!=NULL&&p->next!=NULL)
-    {
-        people *temp=p;
-
-        
-        p=p->next;
-        free(temp);
-    }
-    head->next=NULL;
-    
-    
-
-
-    
-}
-void ReadFile() {
-    FreeList();
-    head=NULL;
-    fp = fopen("peo.dat", "rb");
+people *ReadFile() {
+    FILE *fp = fopen("peo.dat", "rb");
     if (fp == NULL) {
-        printf("Failed!\n");
-        return;  
+        printf("Failed to open file!\n");
+        return NULL;  
     }
-    people *temp = head;
-    people *newp;
+
+    people *head = NULL, *temp = NULL;
     while (1) {
-        newp = (people *)malloc(sizeof(people));
+        people *newp = (people *)malloc(sizeof(people));
         if (fread(newp, sizeof(people), 1, fp) != 1) {
-            free(newp);
+            free(newp);  // 如果读取失败，释放分配的内存并退出循环
             break;
         }
         newp->next = NULL;
 
         if (head == NULL) {
-            head = newp;
-            temp = newp;
+            head = newp;  // 如果链表为空，新节点成为头节点
         } else {
-            temp->next = newp;
-            temp = newp;
+            temp->next = newp;  // 否则，添加到链表末尾
         }
+        temp = newp;  // 更新 temp 指向新的末尾节点
     }
+
     fclose(fp);
+    return head;
 }
 
 
-void WriteFile(){
-    fp=fopen("peo.dat","wb");
-    people *temp =head;
 
-    while (temp!=NULL)
-    {
-        fwrite(temp,sizeof(people),1,fp);
-        temp=temp->next;
+void WriteFile(people *head) {
+    FILE *fp = fopen("peo.dat", "wb");
+    if (fp == NULL) {
+        printf("Failed to open file for writing!\n");
+        return;
     }
-    
-    fclose(fp);
 
+    people *temp = head;
+    while (temp != NULL) {
+        fwrite(temp, sizeof(people), 1, fp);
+        temp = temp->next;
+    }
+
+    fclose(fp);
 }
 
 int newID(){
-    ReadFile();
+    people *head = ReadFile();
     if (head==NULL)
     {
+        FreeList(head);
         return 0;
     }else{
 
@@ -118,16 +103,16 @@ int newID(){
         {
             temp=temp->next;   
         }
-        id=temp->id+1;
-
-        return id;
+        id=temp->id;
+        FreeList(head);
+        return id+1;
 
     }
 
 }
 
 void Add(){
-    ReadFile();
+    people *head = ReadFile(); 
 
     people *add=(people *)malloc(sizeof(people));
     add->next=NULL;
@@ -143,19 +128,20 @@ void Add(){
     gets(add->qq);
     printf("输入单位或班级: ");
     gets(add->poi); 
-    add->id=newID();  
+    add->id=newID();
 
     add->next=head;
     head=add;
 
-    WriteFile();
+    WriteFile(head);
+    FreeList(head);
     printf("Success!\n");
-    free(add);
+    
 
 }
 
 void display(){
-    ReadFile();
+    people *head = ReadFile();
 
     if (head == NULL) {
         printf("联系人列表为空！\n");
@@ -164,20 +150,21 @@ void display(){
     people* temp=head;
 
     printf("%-5s%-15s%-5s%-20s%-20s%-20s\n", "序号", "\t姓名", "\t性别", "\t手机号码", "\tQQ号", "\t单位或班级");
-    while (temp->next!=NULL)
+    while (temp!=NULL)
     {
         printf("%-5d %-15s %-5c %-20s %-20s %-20s\n",temp->id,temp->name,temp->gender,temp->phone,temp->qq,temp->poi);
         temp=temp->next;
     }
+    FreeList(head);
 
 }
 
 void findbyName(char *name){
-    ReadFile();
+    people *head = ReadFile();
     people* temp=head;
     int found=0;
 
-    while (temp->next!=NULL)
+    while (temp!=NULL)
     {
         if (strcmp(temp->name,name)==0)
         {
@@ -195,15 +182,15 @@ void findbyName(char *name){
     {
         printf("找不到名为%s的联系人\n",name);
     }
-
+    FreeList(head);
 }
 
 void findbyPhone(char *phone){
-    ReadFile();
+    people *head = ReadFile();
     people* temp=head;
     int found=0;
 
-    while (temp->next!=NULL)
+    while (temp!=NULL)
     {
         if (strcmp(temp->phone,phone)==0)
         {
@@ -221,9 +208,28 @@ void findbyPhone(char *phone){
     {
         printf("找不到电话号码为%s的联系人\n",phone);
     }
+    FreeList(head);
+}
+
+void displaySorted(){
+    FILE *k;
+    k = fopen("sorted_people.dat", "rb");
+
+    if (k != NULL) {
+        printf("排序后的联系人信息：\n");
+
+        people dcurrent; // 创建一个结构体变量而不是指针
+        printf("%-5s%-15s%-5s%-20s%-20s%-20s\n", "序号", "\t姓名", "\t性别", "\t手机号码", "\tQQ号", "\t单位或班级");
+        while (fread(&dcurrent, sizeof(people), 1, k)) { // 注意这里 &dcurrent
+            printf("%-5d %-15s %-5c %-20s %-20s %-20s\n",dcurrent.id,dcurrent.name,dcurrent.gender,dcurrent.phone,dcurrent.qq,dcurrent.poi);
+        }
+
+        fclose(k); 
+    } 
 }
 
 void SortbyName() {
+    people *head = ReadFile();
     if (head == NULL || head->next == NULL) {
         return;  
     }
@@ -280,22 +286,10 @@ void SortbyName() {
         free(temp);
     }
 
-    sortedFile = fopen("sorted_people.dat", "rb");
-
-    if (sortedFile != NULL) {
-        printf("排序后的联系人信息：\n");
-
-        people *sortedHead = NULL;
-        people *current, *next;
-        printf("%-5s%-15s%-5s%-20s%-20s%-20s\n", "序号", "\t姓名", "\t性别", "\t手机号码", "\tQQ号", "\t单位或班级");
-        while (fread(current, sizeof(people), 1, sortedFile)) {
-            printf("%-5d %-15s %-5c %-20s %-20s %-20s\n",current->id,current->name,current->gender,current->phone,current->qq,current->poi);
-
-        }
-
-        fclose(sortedFile); 
-    } 
+    displaySorted();   
+    FreeList(head);
 }
+
 
 
     
@@ -303,6 +297,7 @@ void SortbyName() {
 
 
 void DeleteByName(const char *targetName) {
+    people *head = ReadFile();
     if (head == NULL) {
         printf("链表为空，无法删除。\n");
         return;
@@ -314,7 +309,7 @@ void DeleteByName(const char *targetName) {
     while (current != NULL) {
         if (strcmp(current->name, targetName) == 0) {
             found=0;
-            printf("确认删除姓名为 %s 的联系人吗？(y/n): ", targetName);
+            printf("确认删除姓名为 %s 的联系人吗？(y/n): \n", targetName);
             printf("%-5s%-15s%-5s%-20s%-20s%-20s\n", "序号", "\t姓名", "\t性别", "\t手机号码", "\tQQ号", "\t单位或班级");
             printf("%-5d %-15s %-5c %-20s %-20s %-20s\n",current->id,current->name,current->gender,current->phone,current->qq,current->poi);
             char confirmation;
@@ -338,7 +333,8 @@ void DeleteByName(const char *targetName) {
         prev = current;
         current = current->next;
     }
-    WriteFile();
+    WriteFile(head);
+    FreeList(head); 
     if (found==1)
     {
         printf("没有找到对应联系人\n");
@@ -350,7 +346,6 @@ void DeleteByName(const char *targetName) {
 int main(){
     createFile();
     SetConsoleOutputCP(65001);
-    ReadFile();
     printf("**********************************\n");
     printf("*网安233 陈薏帆 202301050854*\n");
     printf("**********************************\n");
@@ -411,6 +406,8 @@ int main(){
                 break;
             case 5:
                 SortbyName();
+                //displaySorted();
+                
                 break;
             case 0:
                 exit(0);
