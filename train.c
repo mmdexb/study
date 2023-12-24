@@ -150,22 +150,26 @@ void ReadFile2Arr(){
             while (current != NULL)
             {
                 node* newnode = (node*)malloc(sizeof(node));
+                newnode->next=NULL;
                 fread(newnode, sizeof(node), 1, file);
                 if (prev == NULL)
                 {
                     Trains[i].head = newnode;
+                    current=newnode;
                 }
                 else
                 {
+                    current=newnode;
                     prev->next = newnode;
                 }
 
                 prev = newnode;
+                if (current->next == NULL)
+                {
+                    break;
+                }
+                
                 current = current->next;
-            }
-            if (prev != NULL)
-            {
-                prev->next = NULL;
             }
         }
 
@@ -176,7 +180,7 @@ void ReadFile2Arr(){
 void UpdateTrainsArr(){
    FILE* file = fopen("train.dat", "wb");
 
-    if (file != NULL)
+    if (file != NULL) 
     {
         // 写入结构体数组
         fwrite(Trains, sizeof(train), 5, file);
@@ -189,11 +193,12 @@ void UpdateTrainsArr(){
             {
                 fwrite(current, sizeof(node), 1, file);
             }else{
-                while (current->next != NULL)
+                while (current!= NULL)
                 {
                     fwrite(current, sizeof(node), 1, file);
                     current = current->next;
                 }
+                
             }
         }
 
