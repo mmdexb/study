@@ -22,6 +22,8 @@ struct teacher{
     char className1[20];
     char className2[20];
     char className3[20];
+    char className4[20];
+    char className5[20];
     float Allscore;
 };
 typedef struct teacher teacher;
@@ -62,12 +64,16 @@ void newTeacherFile(){
         scanf(" %c",&tea[i].gender);
         printf("输入教师所在学院: \n");
         scanf("%s",tea[i].college);
-        printf("输入教师课程1: \n");
+        printf("输入教师课程1(输入0表示无此课程): \n");
         scanf("%s",tea[i].className1);
-        printf("输入教师课程2: \n");
+        printf("输入教师课程2(输入0表示无此课程): \n");
         scanf("%s",tea[i].className2);
-        printf("输入教师课程3: \n");
+        printf("输入教师课程3(输入0表示无此课程): \n");
         scanf("%s",tea[i].className3);
+        printf("输入教师课程4(输入0表示无此课程): \n");
+        scanf("%s",tea[i].className4);
+        printf("输入教师课程5(输入0表示无此课程): \n");
+        scanf("%s",tea[i].className5);
         //初始化教师评教成绩
         tea[i].Allscore=0;
         printf("这是您添加的教师信息\n");
@@ -134,20 +140,24 @@ void addTeacher(){
             break;
         }
 
-    }   
+    }
+    getchar();   
     printf("请输入教师性别(M/F)\n");
-    scanf(" %c",tea[teacherNum].gender);
-    getchar();
+    scanf("%c",&tea[teacherNum].gender);
     printf("请输入教师所在学院\n");
     scanf("%s",tea[teacherNum].college);
-    printf("请输入教师课程1\n");
+    printf("请输入教师课程1(0表示无此课程)\n");
     scanf("%s",tea[teacherNum].className1);
-    printf("请输入教师课程2\n");
+    printf("请输入教师课程2(0表示无此课程)\n");
     scanf("%s",tea[teacherNum].className2);
-    printf("请输入教师课程3\n");
+    printf("请输入教师课程3(0表示无此课程)\n");
     scanf("%s",tea[teacherNum].className3);
+    printf("请输入教师课程4(0表示无此课程)\n");
+    scanf("%s",tea[teacherNum].className4);
+    printf("请输入教师课程5(0表示无此课程)\n");
+    scanf("%s",tea[teacherNum].className5);
     printf("这是您添加的教师信息\n");
-    printf("%d %s %c %s %s %s %s \n",tea[teacherNum].id,tea[teacherNum].name,tea[teacherNum].gender,tea[teacherNum].college,tea[teacherNum].className1,tea[teacherNum].className2,tea[teacherNum].className3);
+    printf("%d %s %c %s %s %s %s %s %s\n",tea[teacherNum].id,tea[teacherNum].name,tea[teacherNum].gender,tea[teacherNum].college,tea[teacherNum].className1,tea[teacherNum].className2,tea[teacherNum].className3,tea[teacherNum].className4,tea[teacherNum].className5);
 
     //更新教师数量
     teacherNum++;
@@ -182,13 +192,15 @@ void DelTeacher(){
         return;
     }
     char name[20];
+    int found=0;
     printf("请输入要删除的教师姓名\n");
     scanf("%s",name);
     for(int i=0;i<teacherNum;i++){
         if(strcmp(tea[i].name,name)==0){
+            found=1;
             //打印信息，并确认是否删除
             printf("您要删除的教师信息如下\n");
-            printf("%d %s %c %s %s %s %s \n",tea[i].id,tea[i].name,tea[i].gender,tea[i].college,tea[i].className1,tea[i].className2,tea[i].className3);
+            printf("%d %s %c %s %s %s %s \n",tea[i].id,tea[i].name,tea[i].gender,tea[i].college,tea[i].className1,tea[i].className2,tea[i].className3,tea[i].className4,tea[i].className5);
             printf("是否删除(Y/N)\n");
             char ch;
             scanf(" %c",&ch);
@@ -209,6 +221,11 @@ void DelTeacher(){
             }
         }
     }
+    if (found==0)
+    {
+        printf("没有找到该教师\n");
+    }
+    
     //更新数据到文件
     FILE* fp;
     fp=fopen("teacher.dat","wb");
@@ -234,7 +251,7 @@ void modifyTeacher(){
         if(strcmp(tea[i].name,name)==0){
             //打印信息，并确认是否修改
             printf("您要修改的教师信息如下\n");
-            printf("%d %s %c %s %s %s %s \n",tea[i].id,tea[i].name,tea[i].gender,tea[i].college,tea[i].className1,tea[i].className2,tea[i].className3);
+            printf("%d %s %c %s %s %s %s \n",tea[i].id,tea[i].name,tea[i].gender,tea[i].college,tea[i].className1,tea[i].className2,tea[i].className3,tea[i].className4,tea[i].className5);
             char choice;
             //选择修改的地方
             printf("1.修改性别\n");
@@ -242,6 +259,8 @@ void modifyTeacher(){
             printf("3.修改课程1名称\n");
             printf("4.修改课程2名称\n");
             printf("5.修改课程3名称\n");
+            printf("6.修改课程4名称\n");
+            printf("7.修改课程5名称\n");
             printf("请输入修改的选项\n");
             getchar();
             scanf("%c",&choice);
@@ -267,12 +286,20 @@ void modifyTeacher(){
                     printf("请输入修改后的课程3名称\n");
                     scanf("%s",tea[i].className3);
                     break;
+                case '6':
+                    printf("请输入修改后的课程4名称\n");
+                    scanf("%s",tea[i].className4);
+                    break;
+                case '7':
+                    printf("请输入修改后的课程5名称\n");
+                    scanf("%s",tea[i].className5);
+                    break;
                 default:
                     printf("输入错误\n");
                     break;
             }
             printf("修改后的教师信息如下\n");
-            printf("%d %s %c %s %s %s %s \n",tea[i].id,tea[i].name,tea[i].gender,tea[i].college,tea[i].className1,tea[i].className2,tea[i].className3);
+            printf("%d %s %c %s %s %s %s %s %s \n",tea[i].id,tea[i].name,tea[i].gender,tea[i].college,tea[i].className1,tea[i].className2,tea[i].className3,tea[i].className4,tea[i].className5);
             found=1;
             break;
         }
@@ -329,7 +356,9 @@ void newStudentFile(){
         printf("学生文件打开失败\n");
         return;
     }else{
-        fwrite(&stu[studentNum-1],sizeof(student),1,fp);
+        for(int j=0;j<i;j++){
+            fwrite(&stu[j],sizeof(student),1,fp);
+        }
         fclose(fp);
     }
     
@@ -393,7 +422,7 @@ void CreatFile(){
 void  Judge(){
     //首先按姓名查询教师
     //两种模式，精确查找和模糊查找
-    printf("1.精确查找\n2.模糊查找");
+    printf("1.精确查找\n2.模糊查找\n");
     int choice;
     scanf("%d",&choice);
     
@@ -409,13 +438,19 @@ void  Judge(){
             if(strcmp(tea[i].name,name)==0){
                 found2=1;
                 printf("您输入的教师信息如下\n");
-                printf("%d %s %c %s %s %s %s \n",tea[i].id,tea[i].name,tea[i].gender,tea[i].college,tea[i].className1,tea[i].className2,tea[i].className3);
+                printf("%d %s %c %s %s %s %s %s %s\n",tea[i].id,tea[i].name,tea[i].gender,tea[i].college,tea[i].className1,tea[i].className2,tea[i].className3,tea[i].className4,tea[i].className5);
                 
                 
                 //第一个科目
                 //循环info数组，查找是否已经存在学生对此老师的此科目的评价
+                //如果课程名为0，那么说明此老师没有这门课
+
                 for(int j=0;j<infoNum;j++){
                     if(info[i].teacherId == tea[i].id && strcmp(info[i].className, tea[i].className1) == 0){
+                        if(strcmp(tea[i].className1,"0")==0){
+                            printf("此老师没有这门课，跳过评价\n");
+                            
+                        }else{
                         printf("请输入对%s科目的分数 \n",tea[i].className1);
                         float score=0;
                         scanf("%f",&score);
@@ -423,12 +458,16 @@ void  Judge(){
                         info[j].pjNum++;
                         info[j].FinalScore = info[j].SumScore / info[j].pjNum;
                         found=1;
-                        break;
+                        break;}
                     }
                 }
                 //没有找到，则创建新的记录
                 if (found==0)
-                {
+                {       
+                        if(strcmp(tea[i].className1,"0")==0){
+                            printf("此老师没有这门课，跳过评价\n");
+                            
+                        }else{
                     info[infoNum].teacherId = tea[i].id;
                     strcpy(info[infoNum].className, tea[i].className1);
                     strcpy(info[infoNum].teacherName, tea[i].name);
@@ -440,6 +479,7 @@ void  Judge(){
                     info[infoNum].SumScore = score;
                     info[infoNum].FinalScore = info[infoNum].SumScore / info[infoNum].pjNum;
                     infoNum++;
+                    }
                 }
 
 
@@ -449,6 +489,10 @@ void  Judge(){
                 found=0;
                 for(int j=0;j<infoNum;j++){
                     if(info[i].teacherId == tea[i].id && strcmp(info[i].className, tea[i].className2) == 0){
+                        if(strcmp(tea[i].className2,"0")==0){
+                            printf("此老师没有这门课，跳过评价\n");
+                            
+                        }else{
                         printf("请输入对%s科目的分数 \n",tea[i].className2);
                         float score=0;
                         scanf("%f",&score);
@@ -456,12 +500,16 @@ void  Judge(){
                         info[j].pjNum++;
                         info[j].FinalScore = info[j].SumScore / info[j].pjNum;
                         found=1;
-                        break;
+                        break;}
                     }
                 }
                 //没有找到，则创建新的记录
                 if (found==0)
                 {
+                    if(strcmp(tea[i].className2,"0")==0){
+                        printf("此老师没有这门课，跳过评价\n");
+                        
+                    }else{
                     info[infoNum].teacherId = tea[i].id;
                     strcpy(info[infoNum].className, tea[i].className2);
                     strcpy(info[infoNum].teacherName, tea[i].name);
@@ -473,6 +521,7 @@ void  Judge(){
                     info[infoNum].SumScore = score;
                     info[infoNum].FinalScore = info[infoNum].SumScore / info[infoNum].pjNum;
                     infoNum++;
+                    }
                 }
                 
 
@@ -481,6 +530,10 @@ void  Judge(){
                 //循环info数组，查找是否已经存在学生对此老师的此科目的评价
                 for(int j=0;j<infoNum;j++){
                     if(info[i].teacherId == tea[i].id && strcmp(info[i].className, tea[i].className3) == 0){
+                        if(strcmp(tea[i].className3,"0")==0){
+                            printf("此老师没有这门课，跳过评价\n");
+                            
+                        }else{
                         printf("请输入对%s科目的分数 \n",tea[i].className3);
                         float score=0;
                         scanf("%f",&score);
@@ -488,12 +541,16 @@ void  Judge(){
                         info[j].pjNum++;
                         info[j].FinalScore = info[j].SumScore / info[j].pjNum;
                         found=1;
-                        break;
+                        break;}
                     }
                 }
                 //没有找到，则创建新的记录
                 if (found==0)
                 {
+                    if(strcmp(tea[i].className3,"0")==0){
+                        printf("此老师没有这门课，跳过评价\n");
+                        
+                    }else{
                     info[infoNum].teacherId = tea[i].id;
                     strcpy(info[infoNum].className, tea[i].className3);
                     strcpy(info[infoNum].teacherName, tea[i].name);
@@ -505,6 +562,87 @@ void  Judge(){
                     info[infoNum].SumScore = score;
                     info[infoNum].FinalScore = info[infoNum].SumScore / info[infoNum].pjNum;
                     infoNum++;
+                    }
+                }
+
+                //第四个科目
+                //循环info数组，查找是否已经存在学生对此老师的此科目的评价
+                for(int j=0;j<infoNum;j++){
+                    if(info[i].teacherId == tea[i].id && strcmp(info[i].className, tea[i].className4) == 0){
+                        if(strcmp(tea[i].className4,"0")==0){
+                            printf("此老师没有这门课，跳过评价\n");
+                            
+                        }else{
+                        printf("请输入对%s科目的分数 \n",tea[i].className4);
+                        float score=0;
+                        scanf("%f",&score);
+                        info[j].SumScore += score;
+                        info[j].pjNum++;
+                        info[j].FinalScore = info[j].SumScore / info[j].pjNum;
+                        found=1;
+                        break;}
+                    }
+                }
+                //没有找到，则创建新的记录
+                if (found==0)
+                {
+                    if(strcmp(tea[i].className4,"0")==0){
+                        printf("此老师没有这门课，跳过评价\n");
+                        
+                    }else{
+                    info[infoNum].teacherId = tea[i].id;
+                    strcpy(info[infoNum].className, tea[i].className4);
+                    strcpy(info[infoNum].teacherName, tea[i].name);
+                    strcpy(info[infoNum].college, tea[i].college);
+                    info[infoNum].pjNum = 1;
+                    printf("请输入对%s科目的分数 \n",tea[i].className4);
+                    float score=0;
+                    scanf("%f",&score);
+                    info[infoNum].SumScore = score;
+                    info[infoNum].FinalScore = info[infoNum].SumScore / info[infoNum].pjNum;
+                    infoNum++;
+                    }
+                }
+
+
+                //第五个科目
+                //循环info数组，查找是否已经存在学生对此老师的此科目的评价
+                for(int j=0;j<infoNum;j++){
+                    if(info[i].teacherId == tea[i].id && strcmp(info[i].className, tea[i].className5) == 0){
+                        if(strcmp(tea[i].className5,"0")==0){
+                            printf("此老师没有这门课，跳过评价\n");
+                            
+                        }else{
+                        printf("请输入对%s科目的分数 \n",tea[i].className5);
+                        float score=0;
+                        scanf("%f",&score);
+                        info[j].SumScore += score;
+                        info[j].pjNum++;
+                        info[j].FinalScore = info[j].SumScore / info[j].pjNum;
+                        found=1;
+                        break;
+                        }
+                    }
+                }
+                //没有找到，则创建新的记录
+                if (found==0)
+                {
+                    if(strcmp(tea[i].className5,"0")==0){
+                        printf("此老师没有这门课，跳过评价\n");
+                        
+                    }else{
+                        info[infoNum].teacherId = tea[i].id;
+                        strcpy(info[infoNum].className, tea[i].className5);
+                        strcpy(info[infoNum].teacherName, tea[i].name);
+                        strcpy(info[infoNum].college, tea[i].college);
+                        info[infoNum].pjNum = 1;
+                        printf("请输入对%s科目的分数 \n",tea[i].className5);
+                        float score=0;
+                        scanf("%f",&score);
+                        info[infoNum].SumScore = score;
+                        info[infoNum].FinalScore = info[infoNum].SumScore / info[infoNum].pjNum;
+                        infoNum++;
+                    }
                 }
 
                 //循环info数组，找出此老师的三个科目的FinallScore取平均值给teacher的allscore
@@ -515,7 +653,28 @@ void  Judge(){
                     }
 
                 }
-                tea[i].Allscore=allscore/3.0;
+                float count;
+                //找出此老师课程名不是0的数量
+                if(strcmp(tea[i].className1,"0")!=0){
+                    count++;
+                }
+                if (strcmp(tea[i].className2,"0")!=0)
+                {
+                    count++;
+                }
+                if(strcmp(tea[i].className3,"0")!=0){
+                    count++;
+                }
+                if (strcmp(tea[i].className4,"0")!=0)
+                {
+                    count++;
+                }
+                if(strcmp(tea[i].className5,"0")!=0){
+                    count++;
+                }
+
+                tea[i].Allscore=allscore/count;
+                
                 break;
 
             }
@@ -538,24 +697,28 @@ void  Judge(){
             if(strstr(tea[i].name,name)!=NULL){
                 printf("您输入的教师信息如下\n");
                 //输出教师信息
-                printf("%d %s %c %s %s %s %s \n",tea[i].id,tea[i].name,tea[i].gender,tea[i].college,tea[i].className1,tea[i].className2,tea[i].className3);
+                printf("%d %s %c %s %s %s %s %s %s \n",tea[i].id,tea[i].name,tea[i].gender,tea[i].college,tea[i].className1,tea[i].className2,tea[i].className3,tea[i].className4,tea[i].className5);
             }
         }
         printf("请输入你要评教的老师的完整姓名：\n");
         char name2[20];
         scanf("%s",name2);
+        int found2=0;
         int found=0;
         for(int i=0;i<teacherNum;i++){
             if(strcmp(tea[i].name,name2)==0){
                 printf("您输入的教师信息如下\n");
                 //输出教师信息
-                printf("%d %s %c %s %s %s %s \n",tea[i].id,tea[i].name,tea[i].gender,tea[i].college,tea[i].className1,tea[i].className2,tea[i].className3);
-                                
+                printf("%d %s %c %s %s %s %s %s %s \n",tea[i].id,tea[i].name,tea[i].gender,tea[i].college,tea[i].className1,tea[i].className2,tea[i].className3,tea[i].className4,tea[i].className5);
+                found2=1;                  
 
                 //第一个科目
                 //循环info数组，查找是否已经存在学生对此老师的此科目的评价
                 for(int j=0;j<infoNum;j++){
                     if(info[i].teacherId == tea[i].id && strcmp(info[i].className, tea[i].className1) == 0){
+                        if(strcmp(tea[i].className1,"0")==0){
+                            printf("此老师没有这门课，跳过评价\n");
+                        }else{
                         printf("请输入对%s科目的分数 \n",tea[i].className1);
                         float score=0;
                         scanf("%f",&score);
@@ -563,12 +726,18 @@ void  Judge(){
                         info[j].pjNum++;
                         info[j].FinalScore = info[j].SumScore / info[j].pjNum;
                         found=1;
-                        break;
+                        break;}
                     }
                 }
                 //没有找到，则创建新的记录
                 if (found==0)
                 {
+                    if (strcmp(tea[i].className1,"0")==0)
+                    {
+                        printf("此老师没有这门课，跳过评价\n");
+                        
+                    }else{
+                    
                     info[infoNum].teacherId = tea[i].id;
                     strcpy(info[infoNum].className, tea[i].className1);
                     strcpy(info[infoNum].teacherName, tea[i].name);
@@ -580,6 +749,7 @@ void  Judge(){
                     info[infoNum].SumScore = score;
                     info[infoNum].FinalScore = info[infoNum].SumScore / info[infoNum].pjNum;
                     infoNum++;
+                    }
                 }
 
 
@@ -588,6 +758,10 @@ void  Judge(){
                 //循环info数组，查找是否已经存在学生对此老师的此科目的评价
                 found=0;
                 for(int j=0;j<infoNum;j++){
+                    if(strcmp(tea[i].className2,"0")==0){
+                        printf("此老师没有这门课，跳过评价\n");
+                        
+                    }else{
                     if(info[i].teacherId == tea[i].id && strcmp(info[i].className, tea[i].className2) == 0){
                         printf("请输入对%s科目的分数 \n",tea[i].className2);
                         float score=0;
@@ -596,12 +770,18 @@ void  Judge(){
                         info[j].pjNum++;
                         info[j].FinalScore = info[j].SumScore / info[j].pjNum;
                         found=1;
-                        break;
+                        break;}
                     }
                 }
                 //没有找到，则创建新的记录
                 if (found==0)
                 {
+                    if (strcmp(tea[i].className2,"0")==0)
+                    {
+                        printf("此老师没有这门课，跳过评价\n");
+                        
+                    }else{
+                    
                     info[infoNum].teacherId = tea[i].id;
                     strcpy(info[infoNum].className, tea[i].className2);
                     strcpy(info[infoNum].teacherName, tea[i].name);
@@ -612,7 +792,7 @@ void  Judge(){
                     scanf("%f",&score);
                     info[infoNum].SumScore = score;
                     info[infoNum].FinalScore = info[infoNum].SumScore / info[infoNum].pjNum;
-                    infoNum++;
+                    infoNum++;}
                 }
                 
 
@@ -622,19 +802,30 @@ void  Judge(){
                 found=0;
                 for(int j=0;j<infoNum;j++){
                     if(info[i].teacherId == tea[i].id && strcmp(info[i].className, tea[i].className3) == 0){
-                        printf("请输入对%s科目的分数 \n",tea[i].className3);
-                        float score=0;
-                        scanf("%f",&score);
-                        info[j].SumScore += score;
-                        info[j].pjNum++;
-                        info[j].FinalScore = info[j].SumScore / info[j].pjNum;
-                        found=1;
-                        break;
+                        if (strcmp(tea[i].className3,"0")==0)
+                        {
+                        printf("此老师没有这门课");
+                        
+                        }else{
+                            printf("请输入对%s科目的分数 \n",tea[i].className3);
+                            float score=0;
+                            scanf("%f",&score);
+                            info[j].SumScore += score;
+                            info[j].pjNum++;
+                            info[j].FinalScore = info[j].SumScore / info[j].pjNum;
+                            found=1;
+                            break;}
                     }
                 }
                 //没有找到，则创建新的记录
                 if (found==0)
                 {
+                    if (strcmp(tea[i].className3,"0")==0)
+                    {
+                        printf("此教师没有这门课\n");
+                        
+                    }else{
+                    
                     info[infoNum].teacherId = tea[i].id;
                     strcpy(info[infoNum].className, tea[i].className3);
                     strcpy(info[infoNum].teacherName, tea[i].name);
@@ -645,7 +836,97 @@ void  Judge(){
                     scanf("%f",&score);
                     info[infoNum].SumScore = score;
                     info[infoNum].FinalScore = info[infoNum].SumScore / info[infoNum].pjNum;
+                    infoNum++;}
+                }
+
+
+                //第四个科目
+                //循环info数组，查找是否已经存在学生对此老师的此科目的评价
+                found=0;
+                for(int j=0;j<infoNum;j++){                    
+                    if(info[i].teacherId == tea[i].id && strcmp(info[i].className, tea[i].className4) == 0){
+                        if (strcmp(tea[i].className4,"0")==0)
+                        {
+                            printf("此老师没有这门课");
+                        
+                        }else{
+                            
+                            printf("请输入对%s科目的分数 \n",tea[i].className4);
+                            float score=0;
+                            scanf("%f",&score);
+                            info[j].SumScore += score;
+                            info[j].pjNum++;
+                            info[j].FinalScore = info[j].SumScore / info[j].pjNum;
+                            found=1;
+                            break;
+                        }
+                    }
+                }
+                //没有找到，则创建新的记录
+                if (found==0)
+                {
+                    if (strcmp(tea[i].className4,"0")==0)
+                    {
+                        printf("此教师没有这门课\n");
+                        
+                    }else{
+                    
+                    info[infoNum].teacherId = tea[i].id;
+                    strcpy(info[infoNum].className, tea[i].className4);
+                    strcpy(info[infoNum].teacherName, tea[i].name);
+                    strcpy(info[infoNum].college, tea[i].college);
+                    info[infoNum].pjNum = 1;
+                    printf("请输入对%s科目的分数 \n",tea[i].className4);
+                    float score=0;
+                    scanf("%f",&score);
+                    info[infoNum].SumScore = score;
+                    info[infoNum].FinalScore = info[infoNum].SumScore / info[infoNum].pjNum;
                     infoNum++;
+                    }
+                }
+
+                //第五个科目
+                //循环info数组，查找是否已经存在学生对此老师的此科目的评价
+                found=0;
+                for(int j=0;j<infoNum;j++){
+                    if(info[i].teacherId == tea[i].id && strcmp(info[i].className, tea[i].className5) == 0){
+                        if (strcmp(tea[i].className5,"0")==0)
+                        {
+                            printf("此老师没有这门课");
+
+                        }else{
+                        printf("请输入对%s科目的分数 \n",tea[i].className5);
+                        float score=0;
+                        scanf("%f",&score);
+                        info[j].SumScore += score;
+                        info[j].pjNum++;
+                        info[j].FinalScore = info[j].SumScore / info[j].pjNum;
+                        found=1;
+                        break;
+                        }
+                    }
+                }
+                //没有找到，则创建新的记录
+                if (found==0)
+                {
+                    if (strcmp(tea[i].className5,"0")==0)
+                    {
+                        printf("此教师没有此科目\n");
+                        
+                    }else{
+                    
+                    info[infoNum].teacherId = tea[i].id;
+                    strcpy(info[infoNum].className, tea[i].className5);
+                    strcpy(info[infoNum].teacherName, tea[i].name);
+                    strcpy(info[infoNum].college, tea[i].college);
+                    info[infoNum].pjNum = 1;
+                    printf("请输入对%s科目的分数 \n",tea[i].className5);
+                    float score=0;
+                    scanf("%f",&score);
+                    info[infoNum].SumScore = score;
+                    info[infoNum].FinalScore = info[infoNum].SumScore / info[infoNum].pjNum;
+                    infoNum++;
+                    }
                 }
                 //循环info数组，找出此老师的三个科目的FinallScore取平均值给teacher的allscore
                 float allscore=0;
@@ -655,14 +936,33 @@ void  Judge(){
                     }
 
                 }
-                tea[i].Allscore=allscore/3.0;
-
+                float count;
+                //找出此老师课程名不是0的数量
+                if(strcmp(tea[i].className1,"0")!=0){
+                    count++;
+                }
+                if (strcmp(tea[i].className2,"0")!=0)
+                {
+                    count++;
+                }
+                if(strcmp(tea[i].className3,"0")!=0){
+                    count++;
+                }
+                if (strcmp(tea[i].className4,"0")!=0)
+                {
+                    count++;
+                }
+                if(strcmp(tea[i].className5,"0")!=0){
+                    count++;
+                }
+                tea[i].Allscore=allscore/count;
+                
 
 
                 break;
             }
         }
-        if(found==0){
+        if(found2==0){
             printf("没有此老师\n");
         }
 
