@@ -446,7 +446,7 @@ void  Judge(){
                 //如果课程名为0，那么说明此老师没有这门课
 
                 for(int j=0;j<infoNum;j++){
-                    if(info[i].teacherId == tea[i].id && strcmp(info[i].className, tea[i].className1) == 0){
+                    if(info[j].teacherId == tea[i].id && strcmp(info[j].className, tea[i].className1) == 0){
                         if(strcmp(tea[i].className1,"0")==0){
                             printf("此老师没有这门课，跳过评价\n");
                             
@@ -488,7 +488,7 @@ void  Judge(){
                 //循环info数组，查找是否已经存在学生对此老师的此科目的评价
                 found=0;
                 for(int j=0;j<infoNum;j++){
-                    if(info[i].teacherId == tea[i].id && strcmp(info[i].className, tea[i].className2) == 0){
+                    if(info[j].teacherId == tea[i].id && strcmp(info[j].className, tea[i].className2) == 0){
                         if(strcmp(tea[i].className2,"0")==0){
                             printf("此老师没有这门课，跳过评价\n");
                             
@@ -529,7 +529,7 @@ void  Judge(){
                 //第三个科目
                 //循环info数组，查找是否已经存在学生对此老师的此科目的评价
                 for(int j=0;j<infoNum;j++){
-                    if(info[i].teacherId == tea[i].id && strcmp(info[i].className, tea[i].className3) == 0){
+                    if(info[j].teacherId == tea[i].id && strcmp(info[j].className, tea[i].className3) == 0){
                         if(strcmp(tea[i].className3,"0")==0){
                             printf("此老师没有这门课，跳过评价\n");
                             
@@ -568,7 +568,7 @@ void  Judge(){
                 //第四个科目
                 //循环info数组，查找是否已经存在学生对此老师的此科目的评价
                 for(int j=0;j<infoNum;j++){
-                    if(info[i].teacherId == tea[i].id && strcmp(info[i].className, tea[i].className4) == 0){
+                    if(info[j].teacherId == tea[i].id && strcmp(info[j].className, tea[i].className4) == 0){
                         if(strcmp(tea[i].className4,"0")==0){
                             printf("此老师没有这门课，跳过评价\n");
                             
@@ -608,7 +608,7 @@ void  Judge(){
                 //第五个科目
                 //循环info数组，查找是否已经存在学生对此老师的此科目的评价
                 for(int j=0;j<infoNum;j++){
-                    if(info[i].teacherId == tea[i].id && strcmp(info[i].className, tea[i].className5) == 0){
+                    if(info[j].teacherId == tea[i].id && strcmp(info[j].className, tea[i].className5) == 0){
                         if(strcmp(tea[i].className5,"0")==0){
                             printf("此老师没有这门课，跳过评价\n");
                             
@@ -715,7 +715,7 @@ void  Judge(){
                 //第一个科目
                 //循环info数组，查找是否已经存在学生对此老师的此科目的评价
                 for(int j=0;j<infoNum;j++){
-                    if(info[i].teacherId == tea[i].id && strcmp(info[i].className, tea[i].className1) == 0){
+                    if(info[j].teacherId == tea[i].id && strcmp(info[j].className, tea[i].className1) == 0){
                         if(strcmp(tea[i].className1,"0")==0){
                             printf("此老师没有这门课，跳过评价\n");
                         }else{
@@ -762,7 +762,7 @@ void  Judge(){
                         printf("此老师没有这门课，跳过评价\n");
                         
                     }else{
-                    if(info[i].teacherId == tea[i].id && strcmp(info[i].className, tea[i].className2) == 0){
+                    if(info[j].teacherId == tea[i].id && strcmp(info[j].className, tea[i].className2) == 0){
                         printf("请输入对%s科目的分数 \n",tea[i].className2);
                         float score=0;
                         scanf("%f",&score);
@@ -801,7 +801,7 @@ void  Judge(){
                 //循环info数组，查找是否已经存在学生对此老师的此科目的评价
                 found=0;
                 for(int j=0;j<infoNum;j++){
-                    if(info[i].teacherId == tea[i].id && strcmp(info[i].className, tea[i].className3) == 0){
+                    if(info[j].teacherId == tea[i].id && strcmp(info[j].className, tea[i].className3) == 0){
                         if (strcmp(tea[i].className3,"0")==0)
                         {
                         printf("此老师没有这门课");
@@ -844,7 +844,7 @@ void  Judge(){
                 //循环info数组，查找是否已经存在学生对此老师的此科目的评价
                 found=0;
                 for(int j=0;j<infoNum;j++){                    
-                    if(info[i].teacherId == tea[i].id && strcmp(info[i].className, tea[i].className4) == 0){
+                    if(info[j].teacherId == tea[i].id && strcmp(info[j].className, tea[i].className4) == 0){
                         if (strcmp(tea[i].className4,"0")==0)
                         {
                             printf("此老师没有这门课");
@@ -889,7 +889,7 @@ void  Judge(){
                 //循环info数组，查找是否已经存在学生对此老师的此科目的评价
                 found=0;
                 for(int j=0;j<infoNum;j++){
-                    if(info[i].teacherId == tea[i].id && strcmp(info[i].className, tea[i].className5) == 0){
+                    if(info[j].teacherId == tea[i].id && strcmp(info[j].className, tea[i].className5) == 0){
                         if (strcmp(tea[i].className5,"0")==0)
                         {
                             printf("此老师没有这门课");
